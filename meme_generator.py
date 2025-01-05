@@ -8,5 +8,6 @@ with st.echo():
        pass
 st.metric("My metric", 42, -2)
 st.altair_chart(1)
+"Magic"
 
     
