@@ -101,17 +101,17 @@ def get_url_joke_amount():
     return amount
 
 
-def make_url():
-    categories = get_url_category()
-    flags = get_blacklist_url()
-    parts = get_url_part()
-    search_str = get_url_search_str()
-    amount = get_url_joke_amount()
+def make_url(categories=None, flags=None, parts=None, search_str=None, amount=None):
+    # categories = get_url_category()
+    # flags = get_blacklist_url()
+    # parts = get_url_part()
+    # search_str = get_url_search_str()
+    # amount = get_url_joke_amount()
 
     url = "https://v2.jokeapi.dev/joke/"
     url += categories
 
-    url_list = [flags, parts, search_str, amount]
+    url_list = [flags, parts]
     if flags != "" or parts != "" or search_str != "" or amount != "":
         url += "?"
     for item in url_list:
@@ -123,20 +123,30 @@ def make_url():
 
 
 def get_response(url):
+    print(url)
     response = requests.get(url)
-    if response.status_code == 200:
-        result = response.json()
+    result = response.json()
     return result
 
 
-def check_error(result):
-    return result["error"]
-
-
 def get_jokes(result):
-    if check_error(result) is False:
-        print(result["setup"])
-        print(result["delivery"])
+    if result["error"] is False:
+        if "jokes" in result.keys():
+            for joke in result["jokes"]:
+                print("\n")
+                if joke["type"] == "twopart":
+                    print(joke["setup"])
+                    print(joke["delivery"])
+
+                else:
+                    print(joke["joke"])
+
+        else:
+            if result["type"] == "twopart":
+                print(result["setup"])
+                print(result["delivery"])
+            else:
+                print(result["joke"])
     else:
         print("No jokes found")
 
