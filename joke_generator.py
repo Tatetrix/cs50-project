@@ -115,7 +115,7 @@ def make_url():
     if flags != "" or parts != "" or search_str != "" or amount != "":
         url += "?"
     for item in url_list:
-        if url.endswith("?") == False and flags != "" and parts != "" and search_str != "" and amount != "":
+        if url.endswith("?") is False and flags != "" and parts != "" and search_str != "" and amount != "":
             url += "&"
         url += item
 
@@ -134,7 +134,7 @@ def check_error(result):
 
 
 def get_jokes(result):
-    if check_error(result) == False:
+    if check_error(result) is False:
         print(result["setup"])
         print(result["delivery"])
     else:
