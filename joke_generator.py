@@ -119,7 +119,6 @@ def make_url():
             url += "&"
         url += item
 
-    final_url = f"{url}{categories}{flags}{parts}{search_str}{amount}"
     return url
 
 
