@@ -26,11 +26,20 @@ parts = st.selectbox(
     index=None,
     placeholder="Select contact method...",
 )
-
+amount = st.select_slider(
+    "Select the number of jokes",
+    options=[
+        "1",
+        "2",
+        "3",
+        "4",
+    ])
+search_str = st.chat_input("Keyword to search: ")
+st.write(search_str)
 
 if st.button("Run"):
     try:
-        url = make_url(category, flags, parts)
+        url = make_url(category, flags, parts, search_str, amount)
         st.write(url)
     except TypeError as e:
         st.error(e, icon="🗿")

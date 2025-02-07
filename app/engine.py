@@ -111,7 +111,7 @@ def make_url(categories=None, flags=None, parts=None, search_str=None, amount=No
     url = "https://v2.jokeapi.dev/joke/"
     url += categories
 
-    url_list = [flags, parts]
+    url_list = [flags, parts, search_str, amount]
     if flags != "" or parts != "" or search_str != "" or amount != "":
         url += "?"
     for item in url_list:
@@ -135,20 +135,19 @@ def get_jokes(result):
             for joke in result["jokes"]:
                 print("\n")
                 if joke["type"] == "twopart":
-                    print(joke["setup"])
-                    print(joke["delivery"])
+                    return joke["setup"], joke["delivery"]
 
                 else:
-                    print(joke["joke"])
+                    return joke["joke"]
 
         else:
             if result["type"] == "twopart":
-                print(result["setup"])
-                print(result["delivery"])
+                return result["setup"], result["delivery"]
+
             else:
-                print(result["joke"])
+                return result["joke"]
     else:
-        print("No jokes found")
+        return "No jokes found"
 
     ...
     # return setup delivery
