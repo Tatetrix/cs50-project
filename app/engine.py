@@ -133,7 +133,7 @@ def make_url(categories=None, flags=None, parts=None, search_str=None, amount=No
     if len(url_list) == 1:
         url += url_list[0]
     if len(url_list) >= 2:
-        for i in range(1, len(url_list)):
+        for i in range(0, len(url_list)):
             url += "&"
             url += url_list[i]
 

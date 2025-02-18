@@ -31,14 +31,12 @@ def make_durl(categories=None, flags=None, parts=None, search_str=None, amount=N
     return url
 
 
-print(make_durl("Any", "nsfw", "single", "book", "2"))
-
-
 def make_flags():
     flags = ["nsfw", "political", "racist", "sexist", "religious", "explicit"]
     flag_str = ""
     for flag in flags:
         flag_str += f",{flag}"
+
 
         # flags_str = flag_str.lstrip(",")
         # url_list.append(f"blacklistFlags={flags_str}")
