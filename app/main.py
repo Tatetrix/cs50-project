@@ -1,5 +1,5 @@
 import streamlit as st
-from engine import make_url, get_jokes
+from project import make_url, get_jokes
 import time
 
 st.set_page_config(
