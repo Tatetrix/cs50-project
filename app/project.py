@@ -1,16 +1,6 @@
 import requests
-
-# Any
-"""
-    Customizations:
-    Category : Any / Programming / Misc / Dark / Pun / Spooky / Christmas
-    Blacklist flags : nsfw/ religious / political / racists / sexist / explicit
-    Thay vi add tung custom vao url
-    tra ve cai can add vao url
-    def make url
-    
-    nghi cach them & ?
-"""
+import os
+from datetime import datetime
 
 
 def make_url(categories=None, flags=None, parts=None, search_str=None, amount="1"):
@@ -87,8 +77,38 @@ def get_jokes(url):
 
 def main():
     url = make_url()
-    print(get_jokes(url))
+    return get_jokes(url)
+
+
+def save_jokes_to_file(jokes, filename=None):
+    """
+    Save jokes to a file with an optional custom filename.
+    """
+    # Create directory and generate filename if needed
+    save_dir = "./saved_jokes"
+    os.makedirs(save_dir, exist_ok=True)
+
+    if not filename:
+        filename = f"jokes_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+
+    filepath = os.path.join(save_dir, filename).replace("\\", "/")
+
+    with open(filepath, "w", encoding="utf-8") as file:
+        file.write("SAVED JOKES\n===========\n\n")
+
+        for i, joke in enumerate(jokes, 1):
+            file.write(f"Joke #{i}:\n")
+            if isinstance(joke, list):
+                file.write(f"Setup: {joke[0]}\nPunchline: {joke[1]}\n")
+            else:
+                file.write(f"{joke}\n")
+            file.write("\n---\n\n")
+
+    return f"Jokes saved to {filepath}"
 
 
 if __name__ == "__main__":
-    main()
+    print(main())
+    print(save_jokes_to_file(
+        "spice"))
+    print(f"jokes_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
