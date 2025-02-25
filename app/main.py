@@ -88,9 +88,8 @@ with col2:
         url = make_url(categories, bl_flags, parts, search_str, amount)
 
         jokes = get_jokes(url)
-
-        # returned result is a list
-        # unpack list
+    # New variable to store all jokes for download
+        all_jokes_text = ""
 
         with st.spinner("Wait for it..."):
             time.sleep(3)
@@ -100,26 +99,31 @@ with col2:
                 for i, joke in enumerate(jokes):
                     if isinstance(joke, list):
                         with st.expander(f"`Joke #{i+1}`", expanded=True):
-                            text_contents = ""
+                            joke_text = ""
                             for component in joke:
                                 st.write(component)
-                                text_contents += component
-                        st.download_button(
-                            "Download the joke", text_contents, file_name="kfcjoke.txt", key=i)
+                                joke_text += component + "\n"
+                            all_jokes_text += f"Joke #{i+1}:\n{joke_text}\n\n"
                     else:
                         with st.expander(f"`Joke #{i+1}`", expanded=True):
                             st.write(joke)
-                            text_contents = joke
-                            st.download_button(
-                                "Download the joke", text_contents, file_name="kfcjoke.txt")
+                            all_jokes_text += f"Joke #{i+1}:\n{joke}\n\n"
             else:
                 with st.expander(f"`Joke #{1}`", expanded=True):
-                    text_contents = ""
+                    joke_text = ""
                     for component in jokes:
                         st.write(component)
-                        text_contents += component
-                    st.download_button(
-                        "Download the joke", text_contents, file_name="kfcjoke.txt")
+                        joke_text += component + "\n"
+                    all_jokes_text += f"Joke #1:\n{joke_text}\n"
+
+            # Single download button for all jokes
+            if all_jokes_text:
+                st.download_button(
+                    "Download all jokes",
+                    all_jokes_text,
+                    file_name="all_kfc_jokes.txt",
+                    use_container_width=True
+                )
 
     # except TypeError as e:
     #     st.error(e, icon="🗿")

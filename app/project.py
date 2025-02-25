@@ -108,7 +108,38 @@ def save_jokes_to_file(jokes, filename=None):
 
 
 if __name__ == "__main__":
-    print(main())
-    print(save_jokes_to_file(
-        "spice"))
-    print(f"jokes_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
+
+    print("Categories: Programming/ Misc / Dark / Pun / Spooky / Christmas ")
+    category = input("Which category ? ")
+    print("Categories: NSFW/ Racist / Explicit / Political / Sexist / Religious ")
+    flag = [input("Which flag to blacklist ? ")]
+    print("Parts: Single/ Two Part/ Both ")
+    parts = input("How many parts ? ")
+
+    search_str = input("The joke is about: ")
+    amount = input("Amount of jokes: ")
+    if category == "":
+        category = "Any"
+    if amount == "":
+        amount = 1
+    if parts == "Both":
+        parts = ""
+
+    url = make_url(category, flag, parts, search_str, amount)
+
+    jokes = get_jokes(url)
+
+    if isinstance(jokes[0], list):
+        for i, joke in enumerate(jokes):
+            print(f"Joke#{i+1}:")
+
+            for component in joke:
+                print(component)
+            print("")
+    else:
+        for i, joke in enumerate(jokes):
+            print(f"Joke#{i+1}: ")
+            print(joke)
+            print("")
+    if input("Do you want to save? y/n ") == "y":
+        save_jokes_to_file(jokes)
