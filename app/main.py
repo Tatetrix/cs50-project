@@ -86,7 +86,7 @@ with col2:
             "Get joke", icon="🐔", use_container_width=True)
     if get_joke_button:
         url = make_url(categories, bl_flags, parts, search_str, amount)
-        url
+
         jokes = get_jokes(url)
 
         # returned result is a list
@@ -96,16 +96,30 @@ with col2:
             time.sleep(3)
             st.success("Done!")
             time.sleep(1)
-            for i, joke in enumerate(jokes):
-
-                if isinstance(joke, list):
-                    with st.expander(f"`Joke #{i+1}`", expanded=True):
-                        for i in range(len(joke)):
-                            st.write(joke[i])
-
-                else:
-                    with st.expander(f"`Joke #{i+1}`", expanded=True):
-                        st.write(joke)
+            if isinstance(jokes[0], list):
+                for i, joke in enumerate(jokes):
+                    if isinstance(joke, list):
+                        with st.expander(f"`Joke #{i+1}`", expanded=True):
+                            text_contents = ""
+                            for component in joke:
+                                st.write(component)
+                                text_contents += component
+                        st.download_button(
+                            "Download the joke", text_contents, file_name="kfcjoke.txt", key=i)
+                    else:
+                        with st.expander(f"`Joke #{i+1}`", expanded=True):
+                            st.write(joke)
+                            text_contents = joke
+                            st.download_button(
+                                "Download the joke", text_contents, file_name="kfcjoke.txt")
+            else:
+                with st.expander(f"`Joke #{1}`", expanded=True):
+                    text_contents = ""
+                    for component in jokes:
+                        st.write(component)
+                        text_contents += component
+                    st.download_button(
+                        "Download the joke", text_contents, file_name="kfcjoke.txt")
 
     # except TypeError as e:
     #     st.error(e, icon="🗿")
