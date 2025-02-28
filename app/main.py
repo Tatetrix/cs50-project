@@ -86,8 +86,9 @@ with col2:
             "Get joke", icon="🐔", use_container_width=True)
     if get_joke_button:
         url = make_url(categories, bl_flags, parts, search_str, amount)
-
+        url
         jokes = get_jokes(url)
+        jokes
     # New variable to store all jokes for download
         all_jokes_text = ""
 
@@ -95,26 +96,34 @@ with col2:
             time.sleep(3)
             st.success("Done!")
             time.sleep(1)
-            if isinstance(jokes[0], list):
-                for i, joke in enumerate(jokes):
-                    if isinstance(joke, list):
-                        with st.expander(f"`Joke #{i+1}`", expanded=True):
-                            joke_text = ""
-                            for component in joke:
-                                st.write(component)
-                                joke_text += component + "\n"
-                            all_jokes_text += f"Joke #{i+1}:\n{joke_text}\n\n"
-                    else:
-                        with st.expander(f"`Joke #{i+1}`", expanded=True):
-                            st.write(joke)
-                            all_jokes_text += f"Joke #{i+1}:\n{joke}\n\n"
-            else:
-                with st.expander(f"`Joke #{1}`", expanded=True):
+            for i, joke in enumerate(jokes):
+                if isinstance(joke, list):
+                    with st.expander(f"`Joke #{i+1}`", expanded=True):
+                        joke_text = ""
+                        for component in joke:
+                            st.write(component)
+                            joke_text += component + "\n"
+                        all_jokes_text += f"Joke #{i+1}:\n{joke_text}\n\n"
+                        st.download_button(
+                            "Download joke",
+                            f"Joke #{i+1}:\n{joke_text}\n\n",
+                            file_name="kfc_joke.txt",
+                            key=i
+
+                        )
+
+                else:
                     joke_text = ""
-                    for component in jokes:
-                        st.write(component)
-                        joke_text += component + "\n"
-                    all_jokes_text += f"Joke #1:\n{joke_text}\n"
+                    with st.expander(f"`Joke #{i+1}`", expanded=True):
+                        st.write(joke)
+                        joke_text += joke + "\n"
+                        all_jokes_text += f"Joke #{i+1}:\n{joke_text}\n"
+                        st.download_button(
+                            "Download joke",
+                            f"Joke #{i+1}:\n{joke_text}\n",
+                            file_name="kfc_joke.txt",
+
+                        )
 
             # Single download button for all jokes
             if all_jokes_text:
