@@ -122,6 +122,7 @@ with col2:
                             "Download joke",
                             f"Joke #{i+1}:\n{joke_text}\n",
                             file_name="kfc_joke.txt",
+                            key=i
 
                         )
 
