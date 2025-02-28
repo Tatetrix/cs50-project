@@ -86,9 +86,9 @@ with col2:
             "Get joke", icon="🐔", use_container_width=True)
     if get_joke_button:
         url = make_url(categories, bl_flags, parts, search_str, amount)
-        url
+
         jokes = get_jokes(url)
-        jokes
+
     # New variable to store all jokes for download
         all_jokes_text = ""
 
